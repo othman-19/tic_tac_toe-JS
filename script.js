@@ -10,65 +10,62 @@
 //   [0, 4, 8],
 //   [6, 4, 2]
 // ];
-start();
+
 
 function start(){
+
   const playerFactory = (name, selection) => {
     return { name, selection };
   };
-}
-const playerFactory = (name, selection) => {
-  return { name, selection };
-};
+  
+  let player1 = (function () {
+    let player1name = prompt('Player 1 please enter your name');
+    let player1selection = prompt(
+      ` ${player1name} please select X or O`
+    ).toUpperCase();
+    while (
+      player1selection.toUpperCase() != 'X' &&
+      player1selection.toUpperCase() != 'O'
+    ) {
+      player1selection = prompt(
+        ` ${player1name} please select X or O`
+      ).toUpperCase();
+    }
+    return playerFactory(player1name, player1selection)
+  })();
+  
+  let player2 = (function(){
+    let player2name = prompt('Player 2 please enter your name');
+    let player2selection;
+    player1.selection == 'X' ? (player2selection = 'O') : (player2selection = 'X');
+    return playerFactory(player2name, player2selection);
+  })();
 
-// player setting
-///// make player1 and player2 as functions that retuns objects.
-let player1name = prompt('Player 1 please enter your name');
-let player2name = prompt('Player 2 please enter your name');
-let player1selection = prompt(
-  ` ${player1name} please select X or O`
-).toUpperCase();
+  let currentSelection = player1.selection;
+  const cells = document.querySelectorAll('.cell');
 
-while (
-  player1selection.toUpperCase() != 'X' &&
-  player1selection.toUpperCase() != 'O'
-) {
-  player1selection = prompt(
-    ` ${player1name} please select X or O`
-  ).toUpperCase();
-}
-
-let player2selection;
-player1selection == 'X' ? (player2selection = 'O') : (player2selection = 'X');
-
-if (player1name && player2name && player1selection) {
-  var player1 = playerFactory(player1name, player1selection);
-  var player2 = playerFactory(player2name, player2selection);
-}
-
-let currentSelection = player1.selection;
-const cells = document.querySelectorAll('.cell');
-
-function addEventListenerToCell(){
-  for (let i = 0; i < cells.length; i++) {
-    cells[i].addEventListener('click', fillCell, false);
+  function addEventListenerToCell(){
+    for (let i = 0; i < cells.length; i++) {
+      cells[i].addEventListener('click', fillCell, false);
+    }
+  } 
+  addEventListenerToCell();
+  function fillCell(e){
+    //console.log(e.target.innerText)
+    if (!e.target.innerText){
+      e.target.innerText = currentSelection
+      changeRole()
+    }
   }
-} 
 
-
-addEventListenerToCell();
-
-function fillCell(e){
-  //console.log(e.target.innerText)
-  if (!e.target.innerText){
-    e.target.innerText = currentSelection
-    changeRole()
+  function changeRole(){
+    currentSelection == player1.selection? currentSelection = player2.selection : currentSelection = player1.selection;
   }
 }
+start();
 
-function changeRole(){
-  currentSelection == player1.selection? currentSelection = player2.selection : currentSelection = player1.selection;
-}
+
+
 
 
 // // player setting ends here
