@@ -11,7 +11,7 @@ const player1 = (() => {
     && player1selection.toUpperCase() !== 'O'
   ) {
     player1selection = prompt(
-      ` ${player1name} please select X or O `
+      ` ${player1name} please select X or O `,
     ).toUpperCase();
   }
   return playerFactory(player1name, player1selection);
@@ -68,7 +68,7 @@ function checkWinner(l) {
 // }
 
 function checkTie() {
-  return boardArray.every((i) => typeof i === 'string');
+  return boardArray.every( i => typeof i === 'string');
 }
 
 
@@ -92,17 +92,10 @@ function fillCell(e) {
       }
     } else if (checkTie()) {
       tieDisplay();
-      // endGame();
     }
   }
   changeRole();
 }
-
-// function removeEventListenerFromCell() {
-//   for (let i = 0; i < cells.length; i += 1) {
-//     cells[i].removeEventListener('click', fillCell, false);
-//   }
-// }
 
 function addEventListenerToCell() {
   for (let i = 0; i < cells.length; i += 1) {
