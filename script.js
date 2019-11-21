@@ -61,6 +61,11 @@ function fillCell(e) {
     putInBoard(e.target.id, currentSelection);
     if (checkWinner(currentSelection)) {
       endGame();
+    }else {
+      if(checkTie()){
+        tieDisplay()
+        endGame();
+      }
     }
     changeRole();
   }
@@ -88,6 +93,35 @@ function checkWinner(l) {
   }
 }
 
+function declareWinner(lastSelection) {
+  let winner;
+  if (lastSelection == player1.selection) {
+    winner = player1.name;
+  } else {
+    winner = player2.name;
+  }
+  winnerDisplay(winner);
+  return winner;
+}
+
+const resultDisplay = document.querySelector('.endgame');
+const resultText = document.querySelector('.endgame .text');
+
+function winnerDisplay(winner) {
+  resultDisplay.style.display = 'block';
+  resultText.innerHTML = `The winner is ${winner}`;
+}
+
+function checkTie(){
+  return boardArray.every( i => { return typeof i === "string" });
+}
+
+function tieDisplay() {
+  resultDisplay.style.display = 'block';
+  resultText.innerHTML = `The game is a draw`;
+}
+
+
 function endGame() {
   removeEventListenerFromCell();
 }
@@ -113,16 +147,7 @@ function reset() {
   start();
 }
 
-function declareWinner(lastSelection) {
-  let winner;
-  if (lastSelection == player1.selection) {
-    winner = player1.name;
-  } else {
-    winner = player2.name;
-  }
-  winnerDisplay(winner);
-  return winner;
-}
+
 
 function winnerDisplay(winner) {
   const winnerDisplay = document.querySelector('.endgame');
