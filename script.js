@@ -52,13 +52,31 @@ function fillCell(e) {
   //console.log(e.target.innerText)
   if (!e.target.innerText) {
     e.target.innerText = currentSelection;
-    putInBoard(e.target.id, currentSelection)
+    putInBoard(e.target.id, currentSelection);
+    checkWinner(currentSelection);
     changeRole();
   }
 }
 
+
 function putInBoard(id, selection){
   boardArray[id] = selection;
+}
+
+function checkWinner(l){
+  if((boardArray[0] == l && boardArray[1] == l && boardArray[2] == l)
+  || (boardArray[3] == l && boardArray[4] == l && boardArray[5] == l) 
+  || (boardArray[6] == l && boardArray[7] == l && boardArray[8] == l) 
+  || (boardArray[0] == l && boardArray[3] == l && boardArray[6] == l) 
+  || (boardArray[1] == l && boardArray[4] == l && boardArray[7] == l) 
+  || (boardArray[2] == l && boardArray[5] == l && boardArray[8] == l) 
+  || (boardArray[0] == l && boardArray[4] == l && boardArray[8] == l) 
+  || (boardArray[6] == l && boardArray[4] == l && boardArray[2] == l)){
+    console.log(l, "is winner")
+    return l
+  }else {
+    return false
+  }
 }
 function changeRole() {
   currentSelection == player1.selection
