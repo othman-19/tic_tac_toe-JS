@@ -9,8 +9,9 @@ const player1 = (() => {
   while (
     player1selection.toUpperCase() !== 'X'
     && player1selection.toUpperCase() !== 'O'
-  ) player1selection = prompt(
-      `${player1name} please select X or O`
+  ) {
+    player1selection = prompt(
+      ` ${player1name} please select X or O `,
     ).toUpperCase();
   }
   return playerFactory(player1name, player1selection);
