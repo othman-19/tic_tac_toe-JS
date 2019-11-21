@@ -10,7 +10,7 @@
 //   [0, 4, 8],
 //   [6, 4, 2]
 // ];
-
+const boardArray = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 const playerFactory = (name, selection) => {
   return { name, selection };
 };
@@ -52,10 +52,14 @@ function fillCell(e) {
   //console.log(e.target.innerText)
   if (!e.target.innerText) {
     e.target.innerText = currentSelection;
+    putInBoard(e.target.id, currentSelection)
     changeRole();
   }
 }
 
+function putInBoard(id, selection){
+  boardArray[id] = selection;
+}
 function changeRole() {
   currentSelection == player1.selection
     ? (currentSelection = player2.selection)
@@ -75,6 +79,7 @@ function reset() {
 }
 
 start();
+
 
 // // player setting ends here
 
