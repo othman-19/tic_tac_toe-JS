@@ -10,124 +10,155 @@
 //   [0, 4, 8],
 //   [6, 4, 2]
 // ];
+start();
 
-// const playerFactory = (name, selection) => {
-//   return { name, selection };
-// };
+function start(){
+  const playerFactory = (name, selection) => {
+    return { name, selection };
+  };
+}
+const playerFactory = (name, selection) => {
+  return { name, selection };
+};
 
-// // player setting
+// player setting
+///// make player1 and player2 as functions that retuns objects.
+let player1name = prompt('Player 1 please enter your name');
+let player2name = prompt('Player 2 please enter your name');
+let player1selection = prompt(
+  ` ${player1name} please select X or O`
+).toUpperCase();
 
-// let player1name = prompt('Player 1 please enter your name');
-// let player2name = prompt('Player 2 please enter your name');
-// let player1selection = prompt(
-//   ` ${player1name} please select X or O`
-// ).toUpperCase();
+while (
+  player1selection.toUpperCase() != 'X' &&
+  player1selection.toUpperCase() != 'O'
+) {
+  player1selection = prompt(
+    ` ${player1name} please select X or O`
+  ).toUpperCase();
+}
 
-// while (
-//   player1selection.toUpperCase() != 'X' &&
-//   player1selection.toUpperCase() != 'O'
-// ) {
-//   player1selection = prompt(
-//     ` ${player1name} please select X or O`
-//   ).toUpperCase();
-// }
+let player2selection;
+player1selection == 'X' ? (player2selection = 'O') : (player2selection = 'X');
 
-// let player2selection;
-// player1selection == 'X' ? (player2selection = 'O') : (player2selection = 'X');
+if (player1name && player2name && player1selection) {
+  var player1 = playerFactory(player1name, player1selection);
+  var player2 = playerFactory(player2name, player2selection);
+}
 
-// if (player1name && player2name && player1selection) {
-//   var player1 = playerFactory(player1name, player1selection);
-//   var player2 = playerFactory(player2name, player2selection);
-// }
+let currentSelection = player1.selection;
+const cells = document.querySelectorAll('.cell');
+
+function addEventListenerToCell(){
+  for (let i = 0; i < cells.length; i++) {
+    cells[i].addEventListener('click', fillCell, false);
+  }
+} 
+
+
+addEventListenerToCell();
+
+function fillCell(e){
+  //console.log(e.target.innerText)
+  if (!e.target.innerText){
+    e.target.innerText = currentSelection
+    changeRole()
+  }
+}
+
+function changeRole(){
+  currentSelection == player1.selection? currentSelection = player2.selection : currentSelection = player1.selection;
+}
+
 
 // // player setting ends here
 
-let origBoard;
-const huPlayer = 'O';
-const aiPlayer = 'X';
-const winCombos = [
-  [0, 1, 2],
-  [3, 4, 5],
-  [6, 7, 8],
-  [0, 3, 6],
-  [1, 4, 7],
-  [2, 5, 8],
-  [0, 4, 8],
-  [6, 4, 2]
-];
+// let origBoard;
+// const huPlayer = 'O';
+// const aiPlayer = 'X';
+// const winCombos = [
+//   [0, 1, 2],
+//   [3, 4, 5],
+//   [6, 7, 8],
+//   [0, 3, 6],
+//   [1, 4, 7],
+//   [2, 5, 8],
+//   [0, 4, 8],
+//   [6, 4, 2]
+// ];
 
-const cells = document.querySelectorAll('.cell');
-startGame();
+// const cells = document.querySelectorAll('.cell');
+// startGame();
 
-function startGame() {
-  document.querySelector('.endgame').style.display = 'none';
-  origBoard = Array.from(Array(9).keys());
-  for (let i = 0; i < cells.length; i++) {
-    cells[i].innerText = '';
-    cells[i].style.removeProperty('background-color');
-    cells[i].addEventListener('click', turnClick, false);
-  }
-}
+// function startGame() {
+//   document.querySelector('.endgame').style.display = 'none';
+//   origBoard = Array.from(Array(9).keys());
+//   for (let i = 0; i < cells.length; i++) {
+//     cells[i].innerText = '';
+//     cells[i].style.removeProperty('background-color');
+//     cells[i].addEventListener('click', turnClick, false);
+//   }
+// }
 
-function turnClick(square) {
-  if (typeof origBoard[square.target.id] == 'number') {
-    turn(square.target.id, huPlayer);
-    if (!checkTie()) turn(bestSpot(), aiPlayer);
-  }
-}
+// function turnClick(square) {
+//   if (typeof origBoard[square.target.id] == 'number') {
+//     turn(square.target.id, huPlayer);
+//     if (!checkTie()) turn(bestSpot(), aiPlayer);
+//   }
+// }
 
-function turn(squareId, player) {
-  origBoard[squareId] = player;
-  document.getElementById(squareId).innerText = player;
-  let gameWon = checkWin(origBoard, player);
-  if (gameWon) gameOver(gameWon);
-}
+// function turn(squareId, player) {
+//   origBoard[squareId] = player;
+//   document.getElementById(squareId).innerText = player;
+//   let gameWon = checkWin(origBoard, player);
+//   if (gameWon) gameOver(gameWon);
+// }
 
-function checkWin(board, player) {
-  let plays = board.reduce((a, e, i) => (e === player ? a.concat(i) : a), []);
-  let gameWon = null;
-  for (let [index, win] of winCombos.entries()) {
-    if (win.every(elem => plays.indexOf(elem) > -1)) {
-      gameWon = { index: index, player: player };
-      break;
-    }
-  }
-  return gameWon;
-}
+// function checkWin(board, player) {
+//   let plays = board.reduce((a, e, i) => (e === player ? a.concat(i) : a), []);
+//   let gameWon = null;
+//   for (let [index, win] of winCombos.entries()) {
+//     if (win.every(elem => plays.indexOf(elem) > -1)) {
+//       gameWon = { index: index, player: player };
+//       break;
+//     }
+//   }
+//   return gameWon;
+// }
 
-function gameOver(gameWon) {
-  for (let index of winCombos[gameWon.index]) {
-    document.getElementById(index).style.backgroundColor =
-      gameWon.player == huPlayer ? 'blue' : 'red';
-  }
+// function gameOver(gameWon) {
+//   for (let index of winCombos[gameWon.index]) {
+//     document.getElementById(index).style.backgroundColor =
+//       gameWon.player == huPlayer ? 'blue' : 'red';
+//   }
 
-  for (let i = 0; i < cells.length; i++) {
-    cells[i].removeEventListener('click', turnClick, false);
-  }
-  declareWinner(gameWon.player == huPlayer ? 'You Win' : 'You Lose');
-}
+//   for (let i = 0; i < cells.length; i++) {
+//     cells[i].removeEventListener('click', turnClick, false);
+//   }
+//   declareWinner(gameWon.player == huPlayer ? 'You Win' : 'You Lose');
+// }
 
-function declareWinner(who) {
-  document.querySelector('.endgame').style.display = 'block';
-  document.querySelector('.endgame .text').innerText = who;
-}
+// function declareWinner(who) {
+//   document.querySelector('.endgame').style.display = 'block';
+//   document.querySelector('.endgame .text').innerText = who;
+// }
 
-function emptySquares() {
-  return origBoard.filter(s => typeof s == 'number');
-}
+// function emptySquares() {
+//   return origBoard.filter(s => typeof s == 'number');
+// }
 
-function bestSpot() {
-  return emptySquares()[0];
-}
+// function bestSpot() {
+//   return emptySquares()[0];
+// }
 
-function checkTie() {
-  if (emptySquares().length == 0) {
-    for (let i = 0; i < cells.length; i++) {
-      cells[i].style.backgroundColor = 'green';
-      cells[i].removeEventListener('click', turnClick, false);
-    }
-    declareWinner('Tie Game');
-    return true;
-  }
-  return false;
-}
+// function checkTie() {
+//   if (emptySquares().length == 0) {
+//     for (let i = 0; i < cells.length; i++) {
+//       cells[i].style.backgroundColor = 'green';
+//       cells[i].removeEventListener('click', turnClick, false);
+//     }
+//     declareWinner('Tie Game');
+//     return true;
+//   }
+//   return false;
+// }
