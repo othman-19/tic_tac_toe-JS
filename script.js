@@ -19,7 +19,6 @@ const player1 = (() => {
 const player2 = (() => {
   const player2name = prompt('Player 2 please enter your name');// eslint-disable-line no-alert
   const player2selection = (player1.selection === 'X') ? 'O' : 'X';
-  alert(`${player2name} you are ${player2selection}`);// eslint-disable-line no-alert
   return playerFactory(player2name, player2selection);
 })();
 let currentSelection = player1.selection;
@@ -63,7 +62,7 @@ function checkWinner(l) {
 }
 
 function checkTie() {
-  return boardArray.every( i => typeof i === 'string');
+  return boardArray.every(i => typeof i === 'string');
 }
 
 
