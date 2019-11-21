@@ -10,7 +10,7 @@
 //   [0, 4, 8],
 //   [6, 4, 2]
 // ];
-const boardArray = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+let boardArray = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 const playerFactory = (name, selection) => {
   return { name, selection };
 };
@@ -48,36 +48,50 @@ function addEventListenerToCell() {
   }
 }
 
+function removeEventListenerFromCell() {
+  for (let i = 0; i < cells.length; i++) {
+    cells[i].removeEventListener('click', fillCell, false);
+  }
+}
+
 function fillCell(e) {
   //console.log(e.target.innerText)
   if (!e.target.innerText) {
     e.target.innerText = currentSelection;
     putInBoard(e.target.id, currentSelection);
-    checkWinner(currentSelection);
+    if (checkWinner(currentSelection)) {
+      endGame();
+    }
     changeRole();
   }
 }
 
-
-function putInBoard(id, selection){
+function putInBoard(id, selection) {
   boardArray[id] = selection;
 }
 
-function checkWinner(l){
-  if((boardArray[0] == l && boardArray[1] == l && boardArray[2] == l)
-  || (boardArray[3] == l && boardArray[4] == l && boardArray[5] == l) 
-  || (boardArray[6] == l && boardArray[7] == l && boardArray[8] == l) 
-  || (boardArray[0] == l && boardArray[3] == l && boardArray[6] == l) 
-  || (boardArray[1] == l && boardArray[4] == l && boardArray[7] == l) 
-  || (boardArray[2] == l && boardArray[5] == l && boardArray[8] == l) 
-  || (boardArray[0] == l && boardArray[4] == l && boardArray[8] == l) 
-  || (boardArray[6] == l && boardArray[4] == l && boardArray[2] == l)){
-    console.log(l, "is winner")
-    return l
-  }else {
-    return false
+function checkWinner(l) {
+  if (
+    (boardArray[0] == l && boardArray[1] == l && boardArray[2] == l) ||
+    (boardArray[3] == l && boardArray[4] == l && boardArray[5] == l) ||
+    (boardArray[6] == l && boardArray[7] == l && boardArray[8] == l) ||
+    (boardArray[0] == l && boardArray[3] == l && boardArray[6] == l) ||
+    (boardArray[1] == l && boardArray[4] == l && boardArray[7] == l) ||
+    (boardArray[2] == l && boardArray[5] == l && boardArray[8] == l) ||
+    (boardArray[0] == l && boardArray[4] == l && boardArray[8] == l) ||
+    (boardArray[6] == l && boardArray[4] == l && boardArray[2] == l)
+  ) {
+    console.log(declareWinner(l));
+    return declareWinner(l);
+  } else {
+    return false;
   }
 }
+
+function endGame() {
+  removeEventListenerFromCell();
+}
+
 function changeRole() {
   currentSelection == player1.selection
     ? (currentSelection = player2.selection)
@@ -85,6 +99,9 @@ function changeRole() {
 }
 
 function start() {
+  boardArray = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+  currentSelection = player1.selection;
+  document.querySelector('.endgame').style.display = 'none';
   addEventListenerToCell();
 }
 
@@ -96,8 +113,25 @@ function reset() {
   start();
 }
 
-start();
+function declareWinner(lastSelection) {
+  let winner;
+  if (lastSelection == player1.selection) {
+    winner = player1.name;
+  } else {
+    winner = player2.name;
+  }
+  winnerDisplay(winner);
+  return winner;
+}
 
+function winnerDisplay(winner) {
+  const winnerDisplay = document.querySelector('.endgame');
+  const winnerText = document.querySelector('.endgame .text');
+  winnerDisplay.style.display = 'block';
+  winnerText.innerHTML = `The winner is ${winner}`;
+}
+
+start();
 
 // // player setting ends here
 
