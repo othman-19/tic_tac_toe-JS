@@ -10,9 +10,8 @@ const player1 = (() => {
     player1selection.toUpperCase() !== 'X'
     && player1selection.toUpperCase() !== 'O'
   ) {
-    player1selection = prompt(
-      ` ${player1name} please select X or O `,
-    ).toUpperCase();
+    player1selection = prompt(`${player1name} please select X or O`);
+    player1selection = player1selection.toUpperCase();
   }
   return playerFactory(player1name, player1selection);
 })();
