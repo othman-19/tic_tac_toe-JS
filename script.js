@@ -4,22 +4,22 @@ const resultText = document.querySelector('.endgame .text');
 const playerFactory = (name, selection) => ({ name, selection });
 
 const player1 = (() => {
-  const player1name = prompt('Player 1 please enter your name');
-  let player1selection = prompt(`${player1name} please select X or O`).toUpperCase();
+  const player1name = prompt('Player 1 please enter your name');// eslint-disable-line no-alert
+  let player1selection = prompt(`${player1name} please select X or O`).toUpperCase();// eslint-disable-line no-alert
   while (
     player1selection.toUpperCase() !== 'X'
     && player1selection.toUpperCase() !== 'O'
   ) {
-    player1selection = prompt(`${player1name} please select X or O`);
+    player1selection = prompt(`${player1name} please select X or O`);// eslint-disable-line no-alert
     player1selection = player1selection.toUpperCase();
   }
   return playerFactory(player1name, player1selection);
 })();
 
 const player2 = (() => {
-  const player2name = prompt('Player 2 please enter your name');
+  const player2name = prompt('Player 2 please enter your name');// eslint-disable-line no-alert
   const player2selection = (player1.selection === 'X') ? 'O' : 'X';
-  alert(`${player2name} you are ${player2selection}`);
+  alert(`${player2name} you are ${player2selection}`);// eslint-disable-line no-alert
   return playerFactory(player2name, player2selection);
 })();
 let currentSelection = player1.selection;
