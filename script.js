@@ -62,10 +62,6 @@ function checkWinner(l) {
   } return false;
 }
 
-// function endGame() {
-//   removeEventListenerFromCell();
-// }
-
 function checkTie() {
   return boardArray.every( i => typeof i === 'string');
 }
