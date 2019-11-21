@@ -147,15 +147,8 @@ function reset() {
   start();
 }
 
-
-
-function winnerDisplay(winner) {
-  const winnerDisplay = document.querySelector('.endgame');
-  const winnerText = document.querySelector('.endgame .text');
-  winnerDisplay.style.display = 'block';
-  winnerText.innerHTML = `The winner is ${winner}`;
-}
-
+const resetBtn = document.querySelector('BUTTON')
+resetBtn.addEventListener("click", reset)
 start();
 
 // // player setting ends here
