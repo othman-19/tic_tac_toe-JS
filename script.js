@@ -1,3 +1,95 @@
+/*
+Our board object
+array//
+winning combs//
+render new //
+
+reset//
+put in board//
+check winning moves //
+check for tie//
+check for full board
+position
+*/
+
+const boardModule = (() => {
+  let boardArray = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+  // const winCombos = [
+  //   [0, 1, 2],
+  //   [3, 4, 5],
+  //   [6, 7, 8],
+  //   [0, 3, 6],
+  //   [1, 4, 7],
+  //   [2, 5, 8],
+  //   [0, 4, 8],
+  //   [6, 4, 2]
+  // ];
+  function render() {
+    boardArray.forEach((selection, index) => {
+      document.getElementById(index).innerHTML = selection;
+    });
+  }
+
+  function reset() {
+    boardArray = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    render();
+  }
+
+  function putInBoard(id, selection) {
+    if (typeof boardArray[id] !== 'string') {
+      boardArray[id] = selection;
+      render();
+    }
+  }
+
+  function checkWinner(l) {
+    if (
+      (boardArray[0] === l && boardArray[1] === l && boardArray[2] === l)
+      || (boardArray[3] === l && boardArray[4] === l && boardArray[5] === l)
+      || (boardArray[6] === l && boardArray[7] === l && boardArray[8] === l)
+      || (boardArray[0] === l && boardArray[3] === l && boardArray[6] === l)
+      || (boardArray[1] === l && boardArray[4] === l && boardArray[7] === l)
+      || (boardArray[2] === l && boardArray[5] === l && boardArray[8] === l)
+      || (boardArray[0] === l && boardArray[4] === l && boardArray[8] === l)
+      || (boardArray[6] === l && boardArray[4] === l && boardArray[2] === l)
+    ) {
+      return l;
+    } return false;
+  }
+
+  function checkTie() {
+    return boardArray.every(i => typeof i === 'string');
+  }
+
+  return {
+    boardArray, render, reset, putInBoard, checkWinner, checkTie
+  };
+})();
+
+/*
+player factory
+name and selection
+
+*/
+const playerFactory = (name, selection) => ({ name, selection });
+
+const startGame = (() => {
+  
+})();
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 
 let boardArray = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 const resultDisplay = document.querySelector('.endgame');
 const resultText = document.querySelector('.endgame .text');
@@ -114,3 +206,4 @@ function reset() {
 const resetBtn = document.querySelector('BUTTON');
 resetBtn.addEventListener('click', reset);
 start();
+ */
