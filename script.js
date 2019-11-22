@@ -121,30 +121,49 @@ const game = (() => {
     }
   }
 
-  // function display(){
+  function getWinner(s) {
+    let winner;
+    if (s === player1.selection) {
+      winner = player1.name;
+    } else {
+      winner = player2.name;
+    }
+    return winner;
+  }
 
-  // }
 
+  function display(result) {
+    const resultDisplay = document.querySelector('.endgame');
+    const resultText = document.querySelector('.endgame .text');
+    if (result === boardModule.checkWinner(currentSelection)) {
+      resultDisplay.style.display = 'block';
+      resultText.innerHTML = `The winner is ${getWinner(currentSelection)}`;
+    } else if (result === boardModule.checkTie()) {
+      resultDisplay.style.display = 'block';
+      resultText.innerHTML = 'The game is a draw';
+    }
+  }
   function fillCell(e) {
     console.log(e.target)
     if (!e.target.innerText) {
       e.target.innerText = currentSelection;
       boardModule.putInBoard(e.target.id, currentSelection);
       if (boardModule.checkWinner(currentSelection)) {
-        console.log("There is a winner");
+        display(boardModule.checkWinner(currentSelection));
         for (let i = 0; i < cells.length; i += 1) {
           cells[i].removeEventListener('click', fillCell, false);
         }
       } else if (boardModule.checkTie()) {
-        console.log("Its a tie");
         for (let i = 0; i < cells.length; i += 1) {
           cells[i].removeEventListener('click', fillCell, false);
         }
-        // tieDisplay();
+        display(boardModule.checkTie());
       }
       changeRole();  
     }
   }
+
+
 
   // tie or winner display also has to be added
 
