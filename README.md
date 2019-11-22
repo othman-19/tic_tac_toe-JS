@@ -2,7 +2,7 @@
 
 This project is part of a series of projects to be completed by students of [Microverse](https://www.microverse.org/ "The Global School for Remote Software Developers!").
 
-Book Library is a collaborative project by [Sumaer Jolly](https://github.com/sumaerjolly) and [Othmane Naamani](https://github.com/othman-19). The full project description can be found [here](https://www.theodinproject.com/courses/javascript/lessons/library).
+Book Library is a collaborative project by [Sumaer Jolly](https://github.com/sumaerjolly) and [Othmane Naamani](https://github.com/othman-19). The full project description can be found [here](https://www.theodinproject.com/courses/javascript/lessons/tic-tac-toe-javascript).
 
 ## Built With
 
