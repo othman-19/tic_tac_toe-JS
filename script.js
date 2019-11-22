@@ -73,10 +73,83 @@ name and selection
 */
 const playerFactory = (name, selection) => ({ name, selection });
 
-const startGame = (() => {
-  
+
+// 2 players //
+// player name and selection // 
+// We need to create the players using playerfactory // 
+// current player //
+// we need to change the current player on every turn //
+// Create board
+// check for tie 
+// check for winner after everymove 
+// reset the board on click 
+// display result and winner name
+
+
+const game = (() => {
+
+  const cells = document.querySelectorAll('.cell');
+  const player1name = prompt('Player 1 please enter your name');
+  const player2name = prompt('Player 2 please enter your name');
+  let player1selection = prompt(
+    ` ${player1name} please select X or O`
+  ).toUpperCase();
+  while (
+    player1selection.toUpperCase() !== 'X'
+    && player1selection.toUpperCase() !== 'O'
+  ) {
+    player1selection = prompt(`${player1name} please select X or O`); // eslint-disable-line no-alert
+    player1selection = player1selection.toUpperCase();
+  }
+  const player2selection = (player1selection === 'X') ? 'O' : 'X';
+
+  if (player1name && player2name && player1selection) {
+    var player1 = playerFactory(player1name, player1selection);
+    var player2 = playerFactory(player2name, player2selection);
+  }
+
+  let currentSelection = player1.selection;
+
+  function changeRole() {
+    currentSelection = (currentSelection === player1.selection)
+      ? player2.selection : player1.selection;
+  }
+
+  function addEventListenerToCell() {
+    for (let i = 0; i < cells.length; i += 1) {
+      cells[i].addEventListener('click', fillCell, false);
+    }
+  }
+
+  function fillCell(e) {
+    console.log(e.target)
+    if (typeof e.target.innerText !== "number") {
+      e.target.innerText = currentSelection;
+      boardModule.putInBoard(e.target.id, currentSelection);
+      if (boardModule.checkWinner(currentSelection)) {
+        for (let i = 0; i < cells.length; i += 1) {
+          cells[i].removeEventListener('click', fillCell, false);
+        }
+      } else if (boardModule.checkTie()) {
+        // tieDisplay();
+      }
+    }
+    changeRole();
+  }
+
+  // tie or winner display also has to be added
+
+  function gamePlay(){
+    boardModule.reset();
+    addEventListenerToCell();
+
+  }
+ 
+  return {gamePlay};
 })();
 
+
+game.gamePlay();
 
 
 
