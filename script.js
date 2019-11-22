@@ -24,21 +24,21 @@ const boardModule = (() => {
   //   [0, 4, 8],
   //   [6, 4, 2]
   // ];
-  function render() {
-    boardArray.forEach((selection, index) => {
-      document.getElementById(index).innerHTML = selection;
-    });
-  }
+  // function render() {
+  //   boardArray.forEach((selection, index) => {
+  //     document.getElementById(index).innerHTML = selection;
+  //   });
+  // }
 
   function reset() {
     boardArray = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-    render();
+    // render();
   }
 
   function putInBoard(id, selection) {
     if (typeof boardArray[id] !== 'string') {
       boardArray[id] = selection;
-      render();
+      // render();
     }
   }
 
@@ -62,7 +62,7 @@ const boardModule = (() => {
   }
 
   return {
-    boardArray, render, reset, putInBoard, checkWinner, checkTie
+    boardArray, reset, putInBoard, checkWinner, checkTie
   };
 })();
 
@@ -121,20 +121,29 @@ const game = (() => {
     }
   }
 
+  // function display(){
+
+  // }
+
   function fillCell(e) {
     console.log(e.target)
-    if (typeof e.target.innerText !== "number") {
+    if (!e.target.innerText) {
       e.target.innerText = currentSelection;
       boardModule.putInBoard(e.target.id, currentSelection);
       if (boardModule.checkWinner(currentSelection)) {
+        console.log("There is a winner");
         for (let i = 0; i < cells.length; i += 1) {
           cells[i].removeEventListener('click', fillCell, false);
         }
       } else if (boardModule.checkTie()) {
+        console.log("Its a tie");
+        for (let i = 0; i < cells.length; i += 1) {
+          cells[i].removeEventListener('click', fillCell, false);
+        }
         // tieDisplay();
       }
+      changeRole();  
     }
-    changeRole();
   }
 
   // tie or winner display also has to be added
