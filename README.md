@@ -11,7 +11,7 @@ Tic Tac Toe is a collaborative project by [Sumaer Jolly](https://github.com/suma
 
 ## Usage
 
-[The live version of the webapp can be found](https://othman-19.github.io/tic_tac_toe-JS/).
+The live version of the webapp can be found [here](https://othman-19.github.io/tic_tac_toe-JS/).
 
 > Clone the repository to your local machine
 
