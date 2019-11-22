@@ -31,20 +31,19 @@ const boardModule = (() => {
   }
 
   return {
-    boardArray, reset, putInBoard, checkWinner, checkTie
+    boardArray, reset, putInBoard, checkWinner, checkTie,
   };
 })();
 
 const playerFactory = (name, selection) => ({ name, selection });
 
 const game = (() => {
-
+  let player1;
+  let player2;
   const cells = document.querySelectorAll('.cell');
-  const player1name = prompt('Player 1 please enter your name');
-  const player2name = prompt('Player 2 please enter your name');
-  let player1selection = prompt(
-    ` ${player1name} please select X or O`
-  ).toUpperCase();
+  const player1name = prompt('Player 1 please enter your name'); // eslint-disable-line no-alert
+  const player2name = prompt('Player 2 please enter your name'); // eslint-disable-line no-alert
+  let player1selection = prompt(`${player1name} please select X or O`).toUpperCase(); // eslint-disable-line no-alert
   while (
     player1selection.toUpperCase() !== 'X'
     && player1selection.toUpperCase() !== 'O'
@@ -55,8 +54,8 @@ const game = (() => {
   const player2selection = (player1selection === 'X') ? 'O' : 'X';
 
   if (player1name && player2name && player1selection) {
-    var player1 = playerFactory(player1name, player1selection);
-    var player2 = playerFactory(player2name, player2selection);
+    player1 = playerFactory(player1name, player1selection);
+    player2 = playerFactory(player2name, player2selection);
   }
 
   let currentSelection = player1.selection;
@@ -64,12 +63,6 @@ const game = (() => {
   function changeRole() {
     currentSelection = (currentSelection === player1.selection)
       ? player2.selection : player1.selection;
-  }
-
-  function addEventListenerToCell() {
-    for (let i = 0; i < cells.length; i += 1) {
-      cells[i].addEventListener('click', fillCell, false);
-    }
   }
 
   function getWinner(s) {
@@ -108,8 +101,21 @@ const game = (() => {
         }
         display(boardModule.checkTie());
       }
-      changeRole();  
+      changeRole();
     }
+  }
+
+  function addEventListenerToCell() {
+    for (let i = 0; i < cells.length; i += 1) {
+      cells[i].addEventListener('click', fillCell, false);
+    }
+  }
+
+  const resetBtn = document.querySelector('BUTTON');
+
+  function gamePlay() {
+    boardModule.reset();
+    addEventListenerToCell();
   }
 
   function resetButton() {
@@ -121,15 +127,8 @@ const game = (() => {
     gamePlay();
   }
 
-  const resetBtn = document.querySelector('BUTTON');
   resetBtn.addEventListener('click', resetButton);
-
-  function gamePlay(){
-    boardModule.reset();
-    addEventListenerToCell();
-  }
- 
-  return {gamePlay};
+  return { gamePlay };
 })();
 
 game.gamePlay();
